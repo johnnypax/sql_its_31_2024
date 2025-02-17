@@ -41,3 +41,16 @@ INSERT INTO Studente_Esame(studenteRIF, esameRIF) VALUES
 (1,	6),
 (2,	1),
 (3,	5);
+
+-- Tutti gli esami a cui è iscritto Giovanni Pace
+SELECT nominativo, matricola, titolo, data_esame
+	FROM Studente
+    JOIN Studente_Esame ON Studente.studenteID = Studente_Esame.studenteRIF
+    JOIN Esame ON Studente_Esame.esameRIF = Esame.esameID
+    WHERE nominativo = "Giovanni";
+    
+SELECT *
+	FROM Esame
+    JOIN Studente_Esame ON Esame.esameID = Studente_Esame.esameRIF
+    JOIN Studente ON Studente_Esame.studenteRIF = Studente.studenteID
+    WHERE titolo = "Programmazione";
