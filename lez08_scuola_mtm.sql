@@ -20,3 +20,24 @@ CREATE TABLE Studente_Esame(
     FOREIGN KEY (studenteRIF) REFERENCES Studente(studenteID) ON DELETE CASCADE,
     FOREIGN KEY (esameRIF) REFERENCES Esame(esameID) ON DELETE CASCADE
 );
+
+INSERT INTO Studente(studenteID, nominativo, matricola) VALUES
+(1, "Giovanni", "AB12345"),
+(2, "Valeria", "AB12346"),
+(3, "Mario", "AB12347"),
+(4, "Marika", "AB12348");
+
+INSERT INTO Esame(esameID, titolo, data_esame) VALUES
+(1, "Analisi 1", "2025-01-01"),
+(2, "Analisi 1", "2025-01-02"),
+(3, "Analisi 1", "2025-01-03"),
+(4, "Fisica", "2025-02-01"),
+(5, "Fisica", "2025-03-01"),
+(6, "Programmazione", "2025-03-03");
+
+INSERT INTO Studente_Esame(studenteRIF, esameRIF) VALUES
+(1,	1),
+(1,	4),
+(1,	6),
+(2,	1),
+(3,	5);
