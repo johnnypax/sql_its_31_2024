@@ -21,3 +21,60 @@ INSERT INTO Prodotto (codice, nome, descrizione, prezzo, quantita) VALUES ('PQR-
 INSERT INTO Prodotto (codice, nome, descrizione, prezzo, quantita) VALUES ('STU-234', 'Calzini Cotone', 'Calzini in cotone, taglia 40-45', 9.99, 200);
 INSERT INTO Prodotto (codice, nome, descrizione, prezzo, quantita) VALUES ('VWX-567', 'Sciarpa Seta', 'Sciarpa in seta, taglia unica', 34.99, 40);
 INSERT INTO Prodotto (codice, nome, descrizione, prezzo, quantita) VALUES ('YZA-890', 'Borsa Pelle', 'Borsa in pelle, taglia media', 99.99, 15);
+
+-- QL
+
+-- SELECT codice, nome, descrizione, prezzo FROM Prodotto WHERE prezzo > 20;
+
+-- Select per prezzo
+SELECT * 
+	FROM Prodotto 
+    WHERE prezzo > 20 AND prezzo < 40;
+    
+-- Select per nome
+SELECT *
+	FROM Prodotto
+    WHERE nome = "maglietta cotone";
+    
+-- Cerca tutti i prodotti che iniziano per "ma"
+SELECT *
+	FROM Prodotto
+    WHERE nome LIKE "sc%";
+    
+-- Cerca tutti i prodotti che finiscono per "ia"
+SELECT *
+	FROM Prodotto
+    WHERE nome LIKE "%a";
+    
+-- Contiene "io"
+SELECT *
+	FROM Prodotto
+    WHERE nome LIKE "%o%";
+    
+-- Ricerca specifica
+SELECT * 
+	FROM Prodotto
+	WHERE nome LIKE "Calzin_ Cotone";
+    
+-- Logica Booleana
+
+-- prezzo > 20 AND prezzo < 40;
+-- 		FALSE  AND TRUE			= FALSE
+--			0	x	1			= 0
+SELECT * 
+	FROM Prodotto 
+    WHERE prezzo > 20 AND prezzo < 40;
+    
+    
+-- codice = "ABC-123" OR codice = "DEF-456";
+-- 		TRUE		   +    FALSE				= TRUE
+--		1			   +	0					= 1
+
+-- 		0			   +    0					= FALSE
+SELECT * 
+	FROM Prodotto
+	WHERE codice = "ABC-123" OR codice = "DEF-456";
+    
+SELECT * 
+	FROM Prodotto
+	WHERE codice IN ("ABC-123", "DEF-456");
