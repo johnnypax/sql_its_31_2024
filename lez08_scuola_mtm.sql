@@ -1,0 +1,22 @@
+DROP DATABASE IF EXISTS its_31_08_mtm_scuola;
+CREATE DATABASE its_31_08_mtm_scuola;
+USE its_31_08_mtm_scuola;
+
+CREATE TABLE Studente(
+	studenteID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nominativo VARCHAR(250) NOT NULL,
+    matricola VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE Esame(
+	esameID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    titolo VARCHAR(250) NOT NULL,
+    data_esame DATE NOT NULL
+);
+
+CREATE TABLE Studente_Esame(
+	studenteRIF INTEGER NOT NULL,
+    esameRIF INTEGER NOT NULL,
+    FOREIGN KEY (studenteRIF) REFERENCES Studente(studenteID) ON DELETE CASCADE,
+    FOREIGN KEY (esameRIF) REFERENCES Esame(esameID) ON DELETE CASCADE
+);
