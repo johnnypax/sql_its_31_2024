@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS its_31_13_ospedale;
 CREATE DATABASE its_31_13_ospedale;
 USE its_31_13_ospedale;
 
@@ -25,6 +26,9 @@ CREATE TABLE Reparto(
 CREATE TABLE Ricovero(
 	repartoRIF INTEGER NOT NULL,
     pazienteRIF INTEGER NOT NULL,
+    data_ingresso DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_uscite DATETIME,
+    codice VARCHAR(250) NOT NULL UNIQUE,
     FOREIGN KEY (repartoRIF) REFERENCES Reparto(repartoID) ON DELETE CASCADE,
 	FOREIGN KEY (pazienteRIF) REFERENCES Paziente(pazienteID) ON DELETE CASCADE,
     PRIMARY KEY (repartoRIF, pazienteRIF)
@@ -41,6 +45,8 @@ CREATE TABLE Medico(
 CREATE TABLE Visita(
 	pazienteRIF INTEGER NOT NULL,
     medicoRIF INTEGER NOT NULL,
+    data_visita DATETIME DEFAULT CURRENT_TIMESTAMP,
+    note TEXT,
 	FOREIGN KEY (pazienteRIF) REFERENCES Paziente(pazienteID) ON DELETE CASCADE,
     FOREIGN KEY (medicoRIF) REFERENCES Medico(medicoID) ON DELETE CASCADE,
     PRIMARY KEY (pazienteRIF, medicoRIF)
@@ -91,22 +97,22 @@ INSERT INTO Reparto (nome, posti) VALUES
 ('Chirurgia', 30),
 ('Medicina Generale', 28);
 
-INSERT INTO Ricovero (repartoRIF, pazienteRIF) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10),
-(11, 11),
-(12, 12),
-(1, 3),
-(2, 4),
-(3, 5);
+INSERT INTO Ricovero (repartoRIF, pazienteRIF, data_ingresso, data_uscite, codice) VALUES
+(1, 1, '2023-10-26 10:00:00', '2023-11-02 12:00:00', 'RCV001'),
+(2, 2, '2023-10-27 11:00:00', '2023-11-03 13:00:00', 'RCV002'),
+(3, 3, '2023-10-28 12:00:00', '2023-11-04 14:00:00', 'RCV003'),
+(4, 4, '2023-10-29 13:00:00', '2023-11-05 15:00:00', 'RCV004'),
+(5, 5, '2023-10-30 14:00:00', '2023-11-06 16:00:00', 'RCV005'),
+(6, 6, '2023-10-31 15:00:00', '2023-11-07 17:00:00', 'RCV006'),
+(7, 7, '2023-11-01 16:00:00', '2023-11-08 18:00:00', 'RCV007'),
+(8, 8, '2023-11-02 17:00:00', '2023-11-09 19:00:00', 'RCV008'),
+(9, 9, '2023-11-03 18:00:00', '2023-11-10 20:00:00', 'RCV009'),
+(10, 10, '2023-11-04 19:00:00', '2023-11-11 21:00:00', 'RCV010'),
+(11, 11, '2023-11-05 20:00:00', '2023-11-12 22:00:00', 'RCV011'),
+(12, 12, '2023-11-06 21:00:00', '2023-11-13 23:00:00', 'RCV012'),
+(1, 3, '2023-11-07 22:00:00', '2023-11-14 00:00:00', 'RCV013'),
+(2, 4, '2023-11-08 23:00:00', '2023-11-15 01:00:00', 'RCV014'),
+(3, 5, '2023-11-09 00:00:00', '2023-11-16 02:00:00', 'RCV015');
 
 INSERT INTO Medico (nominativo, identificativo, repartoRIF) VALUES
 ('Dott. Mario Bianchi', 'MB123', 1),
@@ -122,54 +128,44 @@ INSERT INTO Medico (nominativo, identificativo, repartoRIF) VALUES
 ('Dott.ssa Valentina Grigio', 'VG1234', 11),
 ('Dott. Marco Verde', 'MV5678', 12);
 
-INSERT INTO Visita (pazienteRIF, medicoRIF) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10),
-(11, 11),
-(12, 12),
-(1, 2),
-(1, 3),
-(2, 1),
-(2, 3),
-(3, 1),
-(3, 2),
-(4, 5),
-(4, 6),
-(5, 4),
-(5, 6),
-(6, 4),
-(6, 5),
-(7, 8),
-(7, 9),
-(8, 7),
-(8, 9),
-(9, 7),
-(9, 8),
-(10, 11),
-(10, 12),
-(11, 10),
-(11, 12),
-(12, 10),
-(12, 11),
-(1, 12),
-(2, 11),
-(3, 10),
-(4, 9),
-(5, 8),
-(6, 7),
-(7, 6),
-(8, 5),
-(9, 4),
-(10, 3),
-(11, 2),
-(12, 1);
+INSERT INTO Visita (pazienteRIF, medicoRIF, data_visita, note) VALUES
+(1, 1, '2023-10-26 11:00:00', 'Controllo generale.'),
+(2, 2, '2023-10-27 12:00:00', 'Monitoraggio parametri vitali.'),
+(3, 3, '2023-10-28 13:00:00', 'Verifica stato neurologico.'),
+(4, 4, '2023-10-29 14:00:00', 'Controllo crescita e sviluppo.'),
+(5, 5, '2023-10-30 15:00:00', 'Monitoraggio funzione digestiva.'),
+(6, 6, '2023-10-31 16:00:00', 'Controllo terapia oncologica.'),
+(7, 7, '2023-11-01 17:00:00', 'Valutazione lesioni cutanee.'),
+(8, 8, '2023-11-02 18:00:00', 'Esame della vista.'),
+(9, 9, '2023-11-03 19:00:00', 'Controllo funzionalità renale.'),
+(10, 10, '2023-11-04 20:00:00', 'Monitoraggio funzione respiratoria.'),
+(11, 11, '2023-11-05 21:00:00', 'Controllo post-operatorio.'),
+(12, 12, '2023-11-06 22:00:00', 'Visita di controllo generale.'),
+(1, 2, '2023-11-07 10:30:00', 'Controllo post esami.'),
+(1, 3, '2023-11-08 11:30:00', 'Monitoraggio terapia.'),
+(2, 1, '2023-11-09 12:30:00', 'Controllo parametri.'),
+(2, 3, '2023-11-10 13:30:00', 'Verifica terapia.'),
+(3, 1, '2023-11-11 14:30:00', 'Controllo neurologico.'),
+(3, 2, '2023-11-12 15:30:00', 'Monitoraggio parametri vitali.'),
+(4, 5, '2023-11-13 16:30:00', 'Controllo crescita.'),
+(4, 6, '2023-11-14 17:30:00', 'Valutazione terapia.'),
+(5, 4, '2023-11-15 18:30:00', 'Controllo digestivo.'),
+(5, 6, '2023-11-16 19:30:00', 'Monitoraggio funzione.'),
+(6, 4, '2023-11-17 20:30:00', 'Controllo terapia.'),
+(6, 5, '2023-11-18 21:30:00', 'Valutazione lesioni.'),
+(7, 8, '2023-11-19 22:30:00', 'Controllo lesioni.'),
+(7, 9, '2023-11-20 23:30:00', 'Verifica terapia.'),
+(8, 7, '2023-11-21 00:30:00', 'Controllo vista.'),
+(8, 9, '2023-11-22 01:30:00', 'Monitoraggio parametri.'),
+(9, 7, '2023-11-23 02:30:00', 'Controllo renale.'),
+(9, 8, '2023-11-24 03:30:00', 'Verifica terapia.');
 
+-- QUERY
 
+SELECT * 
+	FROM Paziente 
+    JOIN Visita ON Paziente.pazienteID = Visita.pazienteRIF
+    JOIN Medico ON Visita.medicoRIF = Medico.medicoID
+    JOIN Reparto ON Medico.repartoRIF = Reparto.repartoID
+    JOIN Ricovero ON Reparto.repartoID = Ricovero.repartoRIF
+    WHERE cod_fis = "VRDGPP80A01L219X";
