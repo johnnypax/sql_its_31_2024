@@ -83,3 +83,21 @@ INSERT INTO Prenotazione (data_ingresso, data_uscita, check_in, check_out, camer
 ('2024-10-01', '2024-10-03', '2024-10-01', '2024-10-03', 15, 5);
 
 -- Elenca i dettagli di tutte le prenotazioni ed i relativi alberghi (e camere) del cliente Mario Rossi
+SELECT Cliente.nome, cognome, email, data_ingresso, data_uscita, check_in, check_out, numero, Albergo.nome AS "Nome albergo", indirizzo, stelle
+	FROM Cliente
+    JOIN Prenotazione ON Cliente.clienteID = Prenotazione.clienteRIF
+    JOIN Camera ON Prenotazione.cameraRIF = Camera.cameraID
+    JOIN Albergo ON Camera.albergoRIF = Albergo.albergoID;
+    -- WHERE Cliente.nome = "Mario" AND cognome = "Rossi";
+    
+-- Creazione vista
+CREATE VIEW RiepilogoPrenotazioni AS
+	SELECT Cliente.nome, cognome, email, data_ingresso, data_uscita, check_in, check_out, numero, Albergo.nome AS "Nome albergo", indirizzo, stelle
+	FROM Cliente
+    JOIN Prenotazione ON Cliente.clienteID = Prenotazione.clienteRIF
+    JOIN Camera ON Prenotazione.cameraRIF = Camera.cameraID
+    JOIN Albergo ON Camera.albergoRIF = Albergo.albergoID;
+    
+DROP VIEW     RiepilogoPrenotazioni;
+
+SELECT * FROM RiepilogoPrenotazioni WHERE nome = "Mario" AND cognome = "Rossi";
