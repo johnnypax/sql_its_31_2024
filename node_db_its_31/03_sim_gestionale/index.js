@@ -77,8 +77,10 @@ app.post("/sim", (req, res) => {
         if(errore)
             res.status(500).json(errore.sqlMessage);
         else{
-            if(risultato.affectedRows > 0)
-                res.status(201).json();
+            if(risultato.affectedRows > 0){
+                nuovaSim.simID = risultato.insertId;
+                res.status(201).json(nuovaSim);
+            }
             else
                 res.status(400).json();
         }
