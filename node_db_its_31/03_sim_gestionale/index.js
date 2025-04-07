@@ -53,7 +53,7 @@ app.get("/sim/:id", (req, res) => {
     connessione.query(query, (errore, risultato) => {
         if (errore)
             res.status(500).json(errore);
-        else{
+        else{  
             let elemento = risultato[0];
 
             if(!elemento)
